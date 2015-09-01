@@ -1,0 +1,8 @@
+frames
+images
+padded
+processed_images
+
+.DS_STORE
+out*.mp4
+temp.png
