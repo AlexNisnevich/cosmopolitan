@@ -148,8 +148,10 @@ create_video([
   ["padded/cosmo_padded_640.png", 12], 
   ["black.png", 8], 
 
+  ["black.png", 8],
   ["padded/politan_padded_720.png", 8],
   ["padded/politan_padded_800.png", 8], 
   ["padded/politan_padded_840.png", 8], 
-  ["black.png", 8]
+
+  ["black.png", 100]
 ], fps, audio_path)
