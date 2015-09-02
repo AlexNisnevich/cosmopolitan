@@ -17,9 +17,7 @@ gem install google-search
 ## Usage
 
 ```
-./padding.sh
-ruby search.rb Bombay,Jakarta,Karachi,Moscow,Istanbul,MexicoCity,Shanghai,Tokyo,NewYork,Bangkok,Beijing,Delhi
-ruby sequence.rb
+ruby cosmopolitan.rb
 ```
 
 The output will be in `out_with_audio.mp4`.
