@@ -83,11 +83,11 @@ script += [
   [@video.search("Baghdad skyline", TINT), 8],
   [@video.search("Los Angeles skyline", TINT), 40],
 
-  [@video.search("Singapore skyline", TINT), 8],
-  [@video.search("Madras skyline", TINT), 8],
-  [@video.search("Baghdad skyline", TINT), 8],
-  [@video.search("Los Angeles skyline", TINT), 8],
-  [@video.search("Los Angeles skyline", TINT), 32],
+  [@video.search("Yokohama skyline", TINT), 8],
+  [@video.search("Dhaka skyline", TINT), 8],
+  [@video.search("Berlin skyline", TINT), 8],
+  [@video.search("Alexandria skyline", TINT), 8],
+  [@video.search("Bangalore skyline", TINT), 32],
 ]
 
 script += [
@@ -96,11 +96,11 @@ script += [
   [@video.search("Baghdad skyline", TINT), 8],
   [@video.search("Los Angeles skyline", TINT), 40],
 
-  [@video.search("Singapore skyline", TINT), 8],
-  [@video.search("Madras skyline", TINT), 8],
-  [@video.search("Baghdad skyline", TINT), 8],
-  [@video.search("Los Angeles skyline", TINT), 8],
-  [@video.search("Los Angeles skyline", TINT), 32],
+  [@video.search("Yokohama skyline", TINT), 8],
+  [@video.search("Dhaka skyline", TINT), 8],
+  [@video.search("Berlin skyline", TINT), 8],
+  [@video.search("Alexandria skyline", TINT), 8],
+  [@video.search("Bangalore skyline", TINT), 32],
 ]
 
 script += [[@video.blank, 100]]
