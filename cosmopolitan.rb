@@ -1,158 +1,109 @@
-require_relative 'search.rb'
-require_relative 'sequence.rb'
+require_relative 'gondry.rb'
 
-fps = 115.0 / 60 * 16  # 115 bpm, 16 frames per beat
-audio_path = "cosmopolitan.wav"
+FPS = 115.0 / 60 * 16  # 115 bpm, 16 frames per beat
+TINT = "-fill fuchsia -colorize 60% -level 70,80%"
 
-system("padding.sh")
+@video = Gondry.new({width: 1920, height: 1080, framerate: FPS})
 
-search_for_skylines([
-  "Bombay", "Jakarta", "Karachi", "Moscow",
-  "Istanbul", "MexicoCity", "Shanghai", "Tokyo", 
-  "NewYork", "Bangkok", "Beijing", "Delhi",
-  "London", "HongKong", "Cairo", "Tehran",
-  "Bogota", "Bandung", "Tianjin", "Lima",
-  "RioDeJaneiro", "Lahore", "Bogor", "Santiago",
-  "StPetersburg", "Shenyang", "Calcutta", "Wuhan",
-  "Sydney", "Guangzhou"
-])
+def intro_beat(image)
+  [
+    [@video.center_thumbnail(image, 560), 8],
+    [@video.center_thumbnail(image, 600), 4], 
+    [@video.center_thumbnail(image, 640), 4], 
+    [@video.center_thumbnail(image, 680), 8], 
+    [@video.center_thumbnail(image, 720), 16], 
+    [@video.center_thumbnail(image, 760), 8], 
+    [@video.center_thumbnail(image, 800), 8], 
+    [@video.center_thumbnail(image, 840), 8]
+  ]
+end
 
-create_video([ 
-  ["padded/contxt_padded_560.jpg", 8], 
-  ["padded/contxt_padded_600.jpg", 4], 
-  ["padded/contxt_padded_640.jpg", 4], 
-  ["padded/contxt_padded_680.jpg", 8], 
-  ["padded/contxt_padded_720.jpg", 16], 
-  ["padded/contxt_padded_760.jpg", 8], 
-  ["padded/contxt_padded_800.jpg", 8], 
-  ["padded/contxt_padded_840.jpg", 8], 
+def city(name)
+  [
+    [@video.search("#{name} skyline", TINT), 24], 
+    [@video.blank, 8]
+  ]
+end
 
-  ["padded/contxt_padded_560.jpg", 8], 
-  ["padded/contxt_padded_600.jpg", 4], 
-  ["padded/contxt_padded_640.jpg", 4], 
-  ["padded/contxt_padded_680.jpg", 8], 
-  ["padded/contxt_padded_720.jpg", 16], 
-  ["padded/contxt_padded_760.jpg", 8], 
-  ["padded/contxt_padded_800.jpg", 8], 
-  ["padded/contxt_padded_840.jpg", 8], 
+script = []
 
-  ["padded/cosmo_padded_560.png", 8], 
-  ["padded/cosmo_padded_600.png", 4], 
-  ["padded/cosmo_padded_640.png", 4], 
-  ["padded/cosmo_padded_680.png", 8], 
-  ["padded/cosmo_padded_720.png", 16], 
-  ["padded/cosmo_padded_760.png", 8], 
-  ["padded/cosmo_padded_800.png", 8], 
-  ["padded/cosmo_padded_840.png", 8], 
+script += intro_beat("contxt.jpg")
+script += intro_beat("contxt.jpg")
+script += intro_beat("cosmo.png")
+script += intro_beat("politan.png")
 
-  ["padded/politan_padded_560.png", 8], 
-  ["padded/politan_padded_600.png", 4], 
-  ["padded/politan_padded_640.png", 4], 
-  ["padded/politan_padded_680.png", 8], 
-  ["padded/politan_padded_720.png", 16], 
-  ["padded/politan_padded_760.png", 8], 
-  ["padded/politan_padded_800.png", 8], 
-  ["padded/politan_padded_840.png", 8],  
+script += city("Bombay")
+script += city("Jakarta")
+script += city("Karachi")
+script += city("Moscow")
+script += city("Istanbul")
+script += city("MexicoCity")
+script += city("Shanghai")
+script += city("Tokyo")
+script += city("NewYork")
+script += city("Bangkok")
+script += city("Beijing")
+script += city("Delhi")
+script += city("London")
+script += city("HongKong")
+script += city("Cairo")
+script += city("Tehran")
+script += city("Bogota")
+script += city("Bandung")
+script += city("Tianjin")
+script += city("Lima")
+script += city("RioDeJaneiro")
+script += city("Lahore")
+script += city("Bogor")
+script += city("Santiago")
+script += city("StPetersburg")
+script += city("Shenyang")
+script += city("Calcutta")
+script += city("Wuhan")
+script += city("Sydney")
+script += city("Guangzhou")
 
-  ["processed_images/Bombay.png", 24], 
-  ["black.png", 8], 
+script += [
+  [@video.center_thumbnail("cosmo.png", 560), 12],  
+  [@video.center_thumbnail("cosmo.png", 640), 12], 
+  [@video.blank, 8]
+]
 
-  ["processed_images/Jakarta.png", 24], 
-  ["black.png", 8], 
+script += [
+  [@video.blank, 4],
+  [@video.center_thumbnail("politan.png", 720), 8],
+  [@video.center_thumbnail("politan.png", 800), 8], 
+  [@video.center_thumbnail("politan.png", 840), 8], 
+  [@video.blank, 4],
+]
 
-  ["processed_images/Karachi.png", 24], 
-  ["black.png", 8], 
+script += [
+  [@video.search("Singapore skyline", TINT), 8],
+  [@video.search("Madras skyline", TINT), 8],
+  [@video.search("Baghdad skyline", TINT), 8],
+  [@video.search("Los Angeles skyline", TINT), 40],
 
-  ["processed_images/Moscow.png", 24], 
-  ["black.png", 8], 
+  [@video.search("Singapore skyline", TINT), 8],
+  [@video.search("Madras skyline", TINT), 8],
+  [@video.search("Baghdad skyline", TINT), 8],
+  [@video.search("Los Angeles skyline", TINT), 8],
+  [@video.search("Los Angeles skyline", TINT), 32],
+]
 
-  ["processed_images/Istanbul.png", 24], 
-  ["black.png", 8], 
+script += [
+  [@video.search("Singapore skyline", TINT), 8],
+  [@video.search("Madras skyline", TINT), 8],
+  [@video.search("Baghdad skyline", TINT), 8],
+  [@video.search("Los Angeles skyline", TINT), 40],
 
-  ["processed_images/MexicoCity.png", 24], 
-  ["black.png", 8], 
+  [@video.search("Singapore skyline", TINT), 8],
+  [@video.search("Madras skyline", TINT), 8],
+  [@video.search("Baghdad skyline", TINT), 8],
+  [@video.search("Los Angeles skyline", TINT), 8],
+  [@video.search("Los Angeles skyline", TINT), 32],
+]
 
-  ["processed_images/Shanghai.png", 24], 
-  ["black.png", 8],
+script += [[@video.blank, 100]]
 
-  ["processed_images/Tokyo.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/NewYork.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Bangkok.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Beijing.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Delhi.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/London.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/HongKong.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Cairo.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Tehran.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Bogota.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Bandung.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Tianjin.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Lima.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/RioDeJaneiro.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Lahore.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Bogor.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Santiago.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/StPetersburg.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Shenyang.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Calcutta.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Wuhan.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Sydney.png", 24], 
-  ["black.png", 8],
-
-  ["processed_images/Guangzhou.png", 24], 
-  ["black.png", 8], 
-
-  ["padded/cosmo_padded_560.png", 12],  
-  ["padded/cosmo_padded_640.png", 12], 
-  ["black.png", 8], 
-
-  ["black.png", 4],
-  ["padded/politan_padded_720.png", 8],
-  ["padded/politan_padded_800.png", 8], 
-  ["padded/politan_padded_840.png", 8], 
-  ["black.png", 4],
-
-  ["black.png", 100]
-], fps, audio_path)
+@video.produce(script, "cosmopolitan.wav")
+@video.play

@@ -20,4 +20,4 @@ gem install google-search
 ruby cosmopolitan.rb
 ```
 
-The output will be in `out_with_audio.mp4`.
+The output will be in `out.mp4`.

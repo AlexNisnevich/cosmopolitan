@@ -1,8 +1,4 @@
-frames
-images
-padded
-processed_images
+temp
 
 .DS_STORE
 out*.mp4
-temp.png
