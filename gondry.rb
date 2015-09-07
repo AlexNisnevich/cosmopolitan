@@ -74,7 +74,7 @@ class Gondry
 
       File.write("#{Dir.pwd}/temp/#{term}.png", open(image.uri).read, {mode: 'wb'})
 
-      `convert 'temp/#{term}.png' #{transform} -resize 1920x1080^ -extent 1920x1080 '#{dest_path}'`
+      `convert 'temp/#{term}.png' #{transform} -resize #{dims}^ -extent #{dims} '#{dest_path}'`
 
       puts dest_path
     end
