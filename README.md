@@ -11,7 +11,7 @@ Requires ImageMagick and ffmpeg (installation varies by platform).
 
 Also,
 ```
-gem install google-search
+gem install google_custom_search_api
 ```
 
 ## Usage

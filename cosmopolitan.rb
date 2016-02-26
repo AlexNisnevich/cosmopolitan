@@ -25,6 +25,13 @@ def city(name)
   ]
 end
 
+def city_from_url(url)
+  [
+    [@video.download(url, TINT), 24], 
+    [@video.blank, 8]
+  ]
+end
+
 def city_stutter(city1, city2)
   [
     [@video.search("#{city1} skyline", TINT), 16],
@@ -69,8 +76,8 @@ script += city("Tianjin")
 script += city_stutter("Lima", "Rio de Janeiro")
 
 script += city("Rio de Janeiro")
-script += city("Lahore Anarkali Street Liberty Market")  # "Lahore skyline" by itself doesn't yield good results
-script += city("Amaris Hotel Bogor")  # "Bogor skyline" by itself doesn't yield good results
+script += city_from_url("http://www.shoppingbag.pk/blog/wp-content/uploads/2015/03/Lahore_Market-anarkali.jpg")  # "Lahore skyline" by itself doesn't yield good results
+script += city_from_url("http://www.anekahotelmurah.com/wp-content/uploads/2015/06/Hotel-Amaris-Pakuan-Bogor.jpg")  # "Bogor skyline" by itself doesn't yield good results
 script += city_stutter("Santiago", "StPetersburg")
 
 script += city("StPetersburg")
@@ -127,6 +134,60 @@ script += [
   [@video.search("Alexandria skyline", TINT), 8],
 
   [@video.search("Bangalore skyline", TINT), 8],
+  [@video.blank, 24],
+]
+
+script += [
+  [@video.blank, 8],
+  [@video.search("Singapore guitar player", TINT), 8],
+  [@video.search("Madras guitar player", TINT), 8],
+  [@video.search("Baghdad guitar player", TINT), 8],
+
+  [@video.search("Los Angeles guitar player", TINT), 8],
+  [@video.blank, 24],
+
+  [@video.search("Yokohama guitar player", TINT), 8],
+  [@video.search("Dhaka guitar player", TINT), 8],
+  [@video.search("Berlin guitar player", TINT), 8],
+  [@video.search("Alexandria guitar player", TINT), 8],
+
+  [@video.search("Bangalore guitar player", TINT), 8],
+  [@video.blank, 24],
+]
+
+script += [
+  [@video.blank, 8],
+  [@video.search("Bangkok guitar player", TINT), 8],
+  [@video.search("Beijing guitar player", TINT), 8],
+  [@video.search("Delhi guitar player", TINT), 8],
+
+  [@video.search("London guitar player", TINT), 8],
+  [@video.blank, 24],
+
+  [@video.search("Hong Kong guitar player", TINT), 8],
+  [@video.search("Cairo guitar player", TINT), 8],
+  [@video.search("Tehran guitar player", TINT), 8],
+  [@video.search("Bogota guitar player", TINT), 8],
+
+  [@video.search("Rio de Janeiro guitar player", TINT), 8],
+  [@video.blank, 24],
+]
+
+script += [
+  [@video.blank, 8],
+  [@video.search("Bombay guitar player", TINT), 8],
+  [@video.search("Jakarta guitar player", TINT), 8],
+  [@video.search("Karachi guitar player", TINT), 8],
+
+  [@video.search("Moscow guitar player", TINT), 8],
+  [@video.blank, 24],
+
+  [@video.search("Istanbul guitar player", TINT), 8],
+  [@video.search("Mexico City guitar player", TINT), 8],
+  [@video.search("Shanghai guitar player", TINT), 8],
+  [@video.search("Tokyo guitar player", TINT), 8],
+
+  [@video.search("New York guitar player", TINT), 8],
   [@video.blank, 24],
 ]
 

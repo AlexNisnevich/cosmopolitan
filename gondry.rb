@@ -1,6 +1,19 @@
 require 'fileutils'
-require 'google-search'
+require 'google_custom_search_api'
 require 'open-uri'
+
+GoogleCustomSearchApi::GOOGLE_API_KEY = "AIzaSyByfn08lBxaX6gWQF6lDzM6J1yNLCcTXcU" 
+                                       #"AIzaSyB66uaGKk2h8m_DYDeyDVffpDZuFIYGXe0"
+GoogleCustomSearchApi::GOOGLE_SEARCH_CX = "004073718321383948041:7czudfpsi6o"
+
+# we don't want any crap from these stock photo domains
+DISALLOWED_DOMAINS = [
+  "dreamstime.com",
+  "123rf.com",
+  "alamy.com",
+  "shutterstock.com",
+  "depositphotos.com"
+]
 
 class Gondry
   def initialize(props)
@@ -63,20 +76,44 @@ class Gondry
     dest_path
   end
 
-  def search(term, transform = "", force = false)
+  def download(url, transform = "")
+    filename = url.split("/").last
+    dest_path = "temp/processed_images/#{filename}"
+
+    unless File.exists? dest_path
+      File.write("#{Dir.pwd}/temp/#{filename}", open(url).read, {mode: 'wb'})
+      `convert 'temp/#{filename}' #{transform} -resize #{dims}^ -extent #{dims} '#{dest_path}'`
+      puts dest_path
+    end
+    dest_path
+  end
+
+  def search(term, transform = "")
     dest_path = "temp/processed_images/#{term}.png"
 
-    unless File.exists?(dest_path) && !force
-      image = Google::Search::Image.new(
-        :query => term, 
-        :image_dims => [:xlarge, :xxlarge, :huge]
-      ).first
+    unless File.exists? dest_path
+      search = GoogleCustomSearchApi.search(term, searchType: "image", imgSize: "xxlarge")
 
-      File.write("#{Dir.pwd}/temp/#{term}.png", open(image.uri).read, {mode: 'wb'})
+      attempt_num = 0
+      written = false
 
-      `convert 'temp/#{term}.png' #{transform} -resize #{dims}^ -extent #{dims} '#{dest_path}'`
+      until written
+        image = search.items[attempt_num].link
 
-      puts dest_path
+        begin
+          DISALLOWED_DOMAINS.each {|d| throw "Disallowed domain: #{d}" if image.include? d }
+          File.write("#{Dir.pwd}/temp/#{term}.png", open(image).read, {mode: 'wb'})
+
+          `convert 'temp/#{term}.png' #{transform} -resize #{dims}^ -extent #{dims} '#{dest_path}'`
+          throw "ImageMagick failure" if $?.exitstatus != 0
+
+          written = true
+          puts dest_path
+        rescue => e
+          puts "Failed to load #{image}: #{e}"
+          attempt_num += 1
+        end 
+      end
     end
 
     dest_path
